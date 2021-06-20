@@ -130,6 +130,7 @@
                         "<p><b>Color: </b>{{$car->color}}</p>" +
                         "<p><b>Status: </b>{{$car->status}}</p>" +
                         "<p><b>Owner: </b>{{$car->user->first_name}} {{$car->user->last_name}}</p>" +
+                        "<p><b>Time: <input type='time'></input><br><br>" +
                             @if($car->status == 'free')
                             `<a href="{{url('/member/order/new/' . $car->id)}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">Order</a>` +
                             @elseif($car->status == 'ordered')
