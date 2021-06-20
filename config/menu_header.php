@@ -10,6 +10,12 @@ return [
             'new-tab' => false,
         ],
         [
+            'title' => 'Update detail',
+            'root' => true,
+            'page' => '/member/self/update',
+            'new-tab' => false,
+        ],
+        [
             'title' => 'Car List',
             'root' => true,
             'page' => '/member/car/list',

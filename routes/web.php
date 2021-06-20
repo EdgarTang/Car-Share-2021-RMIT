@@ -45,6 +45,10 @@ Route::prefix('member')->group(function () {
             Route::get('/new/{carId}', 'UserController@orderCar');
             Route::get('/pay/{orderId}', 'UserController@payOrder');
         });
+        Route::prefix('self')->group(function () {
+            Route::get('/update', 'UserController@showUpdateSelf');
+            Route::post('/update', 'UserController@updateSelf');
+        });
     });
 });
 

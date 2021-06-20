@@ -127,6 +127,25 @@ class UserController extends Controller
         return view('pages.user.order-list', compact('page_title', 'page_description'))
             ->with('orders', Order::where('user_id', session('user')['id'])->get());
     }
+
+    public function showUpdateSelf() {
+        $page_title = 'Update Self Detail';
+        $page_description = '';
+
+        return view('pages.user.self-update', compact('page_title', 'page_description'))
+            ->with('user', User::firstWhere('id', session('user')['id']));
+    }
+
+    public function updateSelf(Request $request) {
+        $input = $request->all();
+        User::where('id', session('user')['id'])->update([
+            'email' => $input['email'],
+            'first_name' => $input['first_name'],
+            'last_name' => $input['last_name'],
+        ]);
+
+        return redirect('/member/self/update');
+    }
 }
 
 ?>
