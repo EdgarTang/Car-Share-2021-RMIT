@@ -95,7 +95,7 @@ class UserController extends Controller
         $car->update(['status' => 'ordered']);
 
         Order::create([
-            'user_id' => session('user')->id,
+            'user_id' => session('user')['id'],
             'car_id' => $carId
         ]);
         return redirect('/member/order/list');
@@ -125,7 +125,7 @@ class UserController extends Controller
         $page_description = '';
 
         return view('pages.user.order-list', compact('page_title', 'page_description'))
-            ->with('orders', Order::where('user_id', session('user')->id)->get());
+            ->with('orders', Order::where('user_id', session('user')['id'])->get());
     }
 }
 

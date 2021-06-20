@@ -10,6 +10,14 @@
             </div>
         </div>
         <div class="card-body">
+            @if(!!$errors)
+                @foreach($errors as $error)
+                    <span class="m-login__account-msg text-danger">
+                        {{$error}}
+                    </span>
+                    <br>
+                @endforeach
+            @endif
             <table class="table">
                 <thead>
                 <tr>
@@ -26,8 +34,11 @@
                         <td>{{$user->first_name}} {{$user->last_name}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>
-                            <a href="{{url('/manager/member/update/' . $user->id)}}" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                            <a href="{{url('/manager/member/update/' . $user['id'])}}" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
                                 <i class="la la-edit"></i>
+                            </a>
+                            <a href="{{url('/manager/member/delete/' . $user['id'])}}" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                                <i class="la la-trash"></i>
                             </a>
                         </td>
                     </tr>

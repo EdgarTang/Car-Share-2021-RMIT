@@ -71,13 +71,13 @@ class ManagerController extends Controller
         return view('pages.manager.dashboard', compact('page_title', 'page_description'));
     }
 
-    public function showUsers()
+    public function showUsers($errors = [])
     {
         $page_title = 'User List';
         $page_description = '';
 
         return view('pages.manager.user-list', compact('page_title', 'page_description'))
-            ->with('users', User::All());
+            ->with('users', User::All())->with('errors', $errors);
     }
 
     public function showNewUser($errors = [])
@@ -122,12 +122,12 @@ class ManagerController extends Controller
         $page_description = '';
 
         return view('pages.manager.self-update', compact('page_title', 'page_description'))
-            ->with('manager', Manager::firstWhere('id', session('user')->id));
+            ->with('manager', Manager::firstWhere('id', session('user')['id']));
     }
 
     public function updateSelf(Request $request) {
         $input = $request->all();
-        Manager::where('id', session('user')->id)->update([
+        Manager::where('id', session('user')['id'])->update([
             'username' => $input['username'],
         ]);
 
@@ -151,5 +151,16 @@ class ManagerController extends Controller
         ]);
 
         return redirect('/manager/member/update/' . $userId);
+    }
+
+    public function deleteUser($userId)
+    {
+        $user = User::where('id', $userId)->first();
+
+        if($user->cars->count() > 0 || $user->orders->count() > 0) {
+            return self::showUsers(['Unable to delete user because data linked']);
+        }
+        $user->delete();
+        return redirect('/manager/member/list');
     }
 }
